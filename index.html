@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sistemas Especialistas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            height: 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <h1 class="row justify-content-md-center">Sistema Especialistas de Exercício</h1>
+        <br>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="nome">Seu Nome:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nome" placeholder="João Silva">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="peso" class="col-sm-2 col-form-label">Seu Peso(Kg):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="peso" placeholder="70">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="idade" class="col-sm-2 col-form-label">Sua Idade:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="idade" placeholder="25">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="altura" class="col-sm-2 col-form-label">Sua Altura(cm):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="altura" placeholder="180">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="exercicio-select" class="col-sm-2 col-form-label">Quantas Horas Exercitar</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="exercicio-select">
+                        <option value="1">Não Prático</option>
+                        <option value="2">Menos de 2 Horas</option>
+                        <option value="3">Mais de 2 Horas e menos de 3 horas</option>
+                        <option value="4">Mais de 3 Horas e menos de 4 horas</option>
+                        <option value="5">Mais de 4 Horas</option>
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Fuma?</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="no-fumo" value="0"
+                                checked>
+                            <label class="form-check-label" for="no-fumo">
+                                Não
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="yes-fumo" value="1">
+                            <label class="form-check-label" for="yes-fumo">
+                                Sim
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group float-right">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+            <div id="result" class="form-group float-left">
+
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>Questionário Ficcional</p>
+        <b>Trabalho de Giovanni Buzzi e Mauro Ribeiro</b>
+        <script>
+            $('form').submit(function (event) {
+                if ($('#text-result').length) {
+                    $('#text-result').remove();
+                }
+
+                var peso = $("#peso").val();
+                var idade = $("#idade").val();
+                var altura = $("#altura").val();
+                var exercicio = $("#exercicio-select").val();
+                var fuma = $("input[name='gridRadios']:checked").val();
+
+                var pontuacao = 0;
+                var resultado;
+
+                if (peso < 50) {
+                    pontuacao += 0;
+                } else if (peso >= 50 && peso < 70) {
+                    pontuacao += 100;
+                } else {
+                    pontuacao += 50;
+                }
+
+                if (idade < 15) {
+                    pontuacao += 0;
+                } else if (idade >= 15 && idade < 30) {
+                    pontuacao += 100;
+                } else {
+                    pontuacao += 50;
+                }
+
+                if (altura < 150) {
+                    pontuacao += 0;
+                } else if (altura >= 150 && altura < 190) {
+                    pontuacao += 100;
+                } else {
+                    pontuacao += 0;
+                }
+
+                if (exercicio == 1) {
+                    pontuacao += 0;
+                } else if (exercicio == 2) {
+                    pontuacao += 50;
+                } else if (exercicio == 3) {
+                    pontuacao += 100;
+                } else if (exercicio == 4) {
+                    pontuacao += 200;
+                } else {
+                    pontuacao += 300;
+                }
+
+                if (fuma == 1) {
+                    pontuacao -= 100;
+                }
+
+                if (pontuacao <= 200) {
+                    resultado = ' você precisa fazer caminhadas leves';
+                } else if (pontuacao > 200 && pontuacao <= 300) {
+                    resultado = ' você precisa fazer caminhada prologanda e exercício de peso leve';
+                } else if (pontuacao > 300 && pontuacao <= 400) {
+                    resultado = ' você precisa fazer caminhada prologanda e exercício de peso médio';
+                } else {
+                    resultado = ' você precisa fazer caminhada prologanda e exercício de peso pesados';
+                }
+
+                var nome = $("#nome").val();
+
+                $('#result').append('<p id="text-result">' + nome + resultado + '</p>');
+                event.preventDefault();
+            });
+        </script>
+    </footer>
+</body>
+
+</html>
